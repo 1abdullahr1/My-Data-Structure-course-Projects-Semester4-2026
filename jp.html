@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Josephus Problem</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Josephus Problem</h1>
+        <p>Find who remains after repeatedly eliminating every M-th person.</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Input</h2>
+
+            <form id="josephusForm">
+                <p>
+                    <label for="n">N — Number of people:</label>
+                    <input
+                        type="number"
+                        id="n"
+                        value="10"
+                        min="1"
+                        step="1"
+                        required
+                    >
+                </p>
+
+                <p>
+                    <label for="m">M — Eliminate every:</label>
+                    <input
+                        type="number"
+                        id="m"
+                        value="3"
+                        min="1"
+                        step="1"
+                        required
+                    >
+                </p>
+
+                <button type="submit">Solve</button>
+                <button type="reset">Reset</button>
+            </form>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Result</h2>
+
+            <p>
+                <strong>Survivor:</strong>
+                <span id="survivor">—</span>
+            </p>
+
+            <p>
+                <strong>Elimination order:</strong>
+            </p>
+
+            <ol id="eliminationOrder">
+                <li>Enter N and M, then press Solve.</li>
+            </ol>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Example</h2>
+
+            <p>
+                For <strong>N = 10</strong> and <strong>M = 3</strong>,
+                the people are numbered from 1 to 10.
+            </p>
+
+            <p>
+                The program repeatedly removes every 3rd person until
+                only one person remains.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <hr>
+        <p>Josephus Problem — Data Structures</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById("josephusForm");
+        const survivorElement = document.getElementById("survivor");
+        const eliminationElement = document.getElementById("eliminationOrder");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const N = Number(document.getElementById("n").value);
+            const M = Number(document.getElementById("m").value);
+
+            if (!Number.isInteger(N) || N < 1) {
+                alert("N must be a positive integer.");
+                return;
+            }
+
+            if (!Number.isInteger(M) || M < 1) {
+                alert("M must be a positive integer.");
+                return;
+            }
+
+            // Create people numbered 1 through N.
+            const people = [];
+
+            for (let i = 1; i <= N; i++) {
+                people.push(i);
+            }
+
+            const eliminationOrder = [];
+            let index = 0;
+
+            // Remove every M-th person.
+            while (people.length > 1) {
+
+                index = (index + M - 1) % people.length;
+
+                const eliminated = people.splice(index, 1)[0];
+
+                eliminationOrder.push(eliminated);
+            }
+
+            // The last remaining person.
+            const survivor = people[0];
+
+            survivorElement.textContent = survivor;
+
+            // Display elimination order.
+            eliminationElement.innerHTML = "";
+
+            eliminationOrder.forEach(function (person) {
+                const listItem = document.createElement("li");
+                listItem.textContent = person;
+                eliminationElement.appendChild(listItem);
+            });
+        });
+
+        form.addEventListener("reset", function () {
+            setTimeout(function () {
+                survivorElement.textContent = "—";
+
+                eliminationElement.innerHTML =
+                    "<li>Enter N and M, then press Solve.</li>";
+            }, 0);
+        });
+    </script>
+
+</body>
+</html>
+```
