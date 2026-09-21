@@ -1,27 +1,222 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Josephus Problem</title>
+
+    <style>
+        /* -------------------------------------------------
+           Classic HTML / Academic Document Style
+           ------------------------------------------------- */
+
+        html {
+            font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.6;
+            color: #111;
+            background: #fff;
+        }
+
+        body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 20px 50px;
+        }
+
+        header {
+            border-bottom: 1px solid #999;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: normal;
+            margin: 0 0 6px;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            font-weight: normal;
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: normal;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        section {
+            margin-bottom: 28px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #aaa;
+            margin: 28px 0;
+        }
+
+        /* Form */
+
+        form {
+            margin-top: 16px;
+        }
+
+        label {
+            display: inline-block;
+            min-width: 190px;
+        }
+
+        input {
+            width: 100px;
+            padding: 5px 6px;
+            border: 1px solid #777;
+            border-radius: 0;
+            background: #fff;
+            color: #111;
+            font: inherit;
+        }
+
+        input:focus {
+            outline: 1px solid #333;
+            outline-offset: 1px;
+        }
+
+        button {
+            padding: 5px 12px;
+            margin-right: 6px;
+            border: 1px solid #666;
+            border-radius: 0;
+            background: #eee;
+            color: #111;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ddd;
+        }
+
+        button:active {
+            background: #ccc;
+        }
+
+        /* Results */
+
+        #survivor {
+            font-weight: bold;
+        }
+
+        ol,
+        ul {
+            padding-left: 28px;
+        }
+
+        li {
+            margin: 3px 0;
+        }
+
+        /* Code / mathematical values */
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95em;
+        }
+
+        /* OnlineGDB area */
+
+        .code-area {
+            border: 1px solid #999;
+            padding: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 40px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        /* Small screens */
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px 14px 40px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            label {
+                display: block;
+                min-width: 0;
+                margin-bottom: 4px;
+            }
+
+            input {
+                width: 100%;
+                max-width: 180px;
+                box-sizing: border-box;
+            }
+
+            button {
+                margin-top: 6px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <header>
         <h1>Josephus Problem</h1>
-        <p>Find who remains after repeatedly eliminating every M-th person.</p>
+
+        <p>
+            A Data Structures implementation and interactive demonstration
+            of the Josephus Problem.
+        </p>
     </header>
+
 
     <main>
 
         <section>
-            <h2>Input</h2>
+            <h2>Problem</h2>
+
+            <p>
+                There are <em>N</em> people standing in a circle.
+                Starting from the first person, every <em>M</em>-th person
+                is eliminated until only one person remains.
+            </p>
+
+            <p>
+                The task is to determine which person survives.
+            </p>
+        </section>
+
+
+        <section>
+            <h2>Interactive Solver</h2>
 
             <form id="josephusForm">
+
                 <p>
-                    <label for="n">N — Number of people:</label>
+                    <label for="n">
+                        <strong>N</strong> — Number of people:
+                    </label>
+
                     <input
                         type="number"
                         id="n"
@@ -33,7 +228,10 @@
                 </p>
 
                 <p>
-                    <label for="m">M — Eliminate every:</label>
+                    <label for="m">
+                        <strong>M</strong> — Elimination interval:
+                    </label>
+
                     <input
                         type="number"
                         id="m"
@@ -44,12 +242,14 @@
                     >
                 </p>
 
-                <button type="submit">Solve</button>
-                <button type="reset">Reset</button>
+                <p>
+                    <button type="submit">Solve</button>
+                    <button type="reset">Reset</button>
+                </p>
+
             </form>
         </section>
 
-        <hr>
 
         <section>
             <h2>Result</h2>
@@ -59,101 +259,205 @@
                 <span id="survivor">—</span>
             </p>
 
-            <p>
-                <strong>Elimination order:</strong>
-            </p>
+            <h3>Elimination Order</h3>
 
             <ol id="eliminationOrder">
                 <li>Enter N and M, then press Solve.</li>
             </ol>
         </section>
 
+
         <hr>
+
+
+        <section>
+            <h2>C++ Implementation</h2>
+
+            <p>
+                The following is the C++ implementation of the
+                Josephus Problem. It can be compiled and executed
+                using OnlineGDB.
+            </p>
+
+            <div class="code-area">
+                <script src="//onlinegdb.com/embed/js/Dg3W3MuH9?theme=dark"></script>
+            </div>
+
+        </section>
+
+
+        <hr>
+
 
         <section>
             <h2>Example</h2>
 
             <p>
-                For <strong>N = 10</strong> and <strong>M = 3</strong>,
-                the people are numbered from 1 to 10.
+                Consider:
+            </p>
+
+            <ul>
+                <li><strong>N = 10</strong></li>
+                <li><strong>M = 3</strong></li>
+            </ul>
+
+            <p>
+                The people are numbered from 1 to 10.
+                Every third person is eliminated.
+                The process continues until only one person remains.
             </p>
 
             <p>
-                The program repeatedly removes every 3rd person until
-                only one person remains.
+                The surviving person is <strong>4</strong>.
             </p>
+        </section>
+
+
+        <section>
+            <h2>Concepts Used</h2>
+
+            <ul>
+                <li>Circular data structures</li>
+                <li>Arrays</li>
+                <li>Iteration</li>
+                <li>Index manipulation</li>
+                <li>Modulo operation</li>
+                <li>Algorithmic problem solving</li>
+            </ul>
         </section>
 
     </main>
 
+
     <footer>
         <hr>
-        <p>Josephus Problem — Data Structures</p>
+
+        <p>
+            Josephus Problem — Data Structures
+        </p>
     </footer>
+
 
     <script>
         const form = document.getElementById("josephusForm");
         const survivorElement = document.getElementById("survivor");
-        const eliminationElement = document.getElementById("eliminationOrder");
+        const eliminationElement =
+            document.getElementById("eliminationOrder");
+
 
         form.addEventListener("submit", function (event) {
+
             event.preventDefault();
 
-            const N = Number(document.getElementById("n").value);
-            const M = Number(document.getElementById("m").value);
+            const N = Number(
+                document.getElementById("n").value
+            );
+
+            const M = Number(
+                document.getElementById("m").value
+            );
+
 
             if (!Number.isInteger(N) || N < 1) {
                 alert("N must be a positive integer.");
                 return;
             }
 
+
             if (!Number.isInteger(M) || M < 1) {
                 alert("M must be a positive integer.");
                 return;
             }
 
-            // Create people numbered 1 through N.
+
+            /*
+             * Create people numbered 1 through N.
+             */
             const people = [];
 
             for (let i = 1; i <= N; i++) {
                 people.push(i);
             }
 
+
+            /*
+             * Store the order in which people are eliminated.
+             */
             const eliminationOrder = [];
+
             let index = 0;
 
-            // Remove every M-th person.
+
+            /*
+             * Continue until only one person remains.
+             */
             while (people.length > 1) {
 
-                index = (index + M - 1) % people.length;
+                /*
+                 * Calculate the index of the next
+                 * person to be eliminated.
+                 *
+                 * M - 1 is used because the current
+                 * position counts as the first position.
+                 */
+                index =
+                    (index + M - 1) %
+                    people.length;
 
-                const eliminated = people.splice(index, 1)[0];
+
+                /*
+                 * Remove the selected person.
+                 */
+                const eliminated =
+                    people.splice(index, 1)[0];
+
 
                 eliminationOrder.push(eliminated);
             }
 
-            // The last remaining person.
+
+            /*
+             * The final remaining person is the survivor.
+             */
             const survivor = people[0];
 
             survivorElement.textContent = survivor;
 
-            // Display elimination order.
+
+            /*
+             * Display elimination order.
+             */
             eliminationElement.innerHTML = "";
 
+
             eliminationOrder.forEach(function (person) {
-                const listItem = document.createElement("li");
+
+                const listItem =
+                    document.createElement("li");
+
                 listItem.textContent = person;
+
                 eliminationElement.appendChild(listItem);
+
             });
+
         });
 
+
+        /*
+         * Reset the displayed results.
+         */
         form.addEventListener("reset", function () {
+
             setTimeout(function () {
+
                 survivorElement.textContent = "—";
 
                 eliminationElement.innerHTML =
                     "<li>Enter N and M, then press Solve.</li>";
+
             }, 0);
+
         });
     </script>
 
